@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/Por30/instinct_onboard",
+  "branch": "cel_instinct",
+  "published_feature_commit": "f27ca3fa659ff9868720dc7349fe5145ed7de909",
+  "verified_remote_head_at_time": "f27ca3fa659ff9868720dc7349fe5145ed7de909",
+  "unchanged_main": "b6965a4202d8dceaf163dd95edb7742ed5d65e38",
+  "verified_at_utc": "2026-11-24T16:08:01.565382+00:00",
+  "transport": "Existing SSH authentication; HTTPS VS Code credential socket unavailable",
+  "models_published": false,
+  "hardware_executed": false
+}
