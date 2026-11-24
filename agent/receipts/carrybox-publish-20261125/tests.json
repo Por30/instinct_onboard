@@ -1,0 +1,35 @@
+{
+  "schema_version": "robotics-engineering-test-receipts.v1",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_carrybox.py -v",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "6dba2e34daf05948eeec6d59075ac28101b139c570ad261e806d84ebcffc2c9e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8d92e7c51670d18c4c3356caad58ec2f945830263eaa2066a0ff99c7dea3e7d0",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": ".venv/bin/python scripts/g1_carrybox.py --offline --steps 50",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "82a45681db984eca231e93edcb9f3c730e9f9bcc1d516dc91c755c69412cbf4d",
+      "stdout_sha256": "b37bc70411c31592226e5883a799f69b00b8052639a7a4e1c1a1a427e9c74e18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": "env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "54245a56a4a09812aaa8b8c21a7cc8958d075c36f7d26d4a4ebcbb8aa1810518",
+      "stdout_sha256": "c585b85064c852e7888a54320a39dbd55250a5a2b9d33dcd899ba22166170df1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    }
+  ]
+}

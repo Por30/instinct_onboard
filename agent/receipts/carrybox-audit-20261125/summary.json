@@ -1,0 +1,367 @@
+[
+  {
+    "mode": "baseline",
+    "requested_duration_s": 60.0,
+    "actual_duration_s": 60.00000000001224,
+    "end_reason": "duration",
+    "runtime_error": null,
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "control_dt": 0.02,
+    "physics_dt": 0.005,
+    "box_xy": [
+      1.0,
+      0.0
+    ],
+    "effort_limits": [
+      88.0,
+      88.0,
+      88.0,
+      139.0,
+      139.0,
+      35.0,
+      88.0,
+      88.0,
+      35.0,
+      139.0,
+      139.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+    ],
+    "first_pickup_s": 4.539999999999925,
+    "first_strict_hold_s": null,
+    "longest_pickup_valid_s": 21.94,
+    "longest_strict_valid_s": 0.0,
+    "training_first_pickup_s": 4.539999999999925,
+    "training_first_strict_hold_s": null,
+    "training_longest_pickup_valid_s": 21.94,
+    "training_longest_strict_valid_s": 0.0,
+    "strict_metric_disagreement_steps": 0,
+    "pickup_metric_disagreement_steps": 0,
+    "post_pickup_ground_intervals_s": [
+      [
+        27.279999999998857,
+        29.399999999998435
+      ],
+      [
+        51.40000000000784,
+        53.0800000000087
+      ]
+    ],
+    "final": {
+      "time_s": 60.00000000001224,
+      "steps": 3000,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.774337790455057,
+      "box_position": [
+        0.7612661945127512,
+        -0.04454893985106362,
+        0.970261679766838
+      ],
+      "hand_forces_N": [
+        29.27405183356475,
+        25.957885947479884
+      ],
+      "roll_rad": 0.0004886721992560045,
+      "pitch_rad": -0.13684216927795198,
+      "max_torque_limit_ratio": 1.0,
+      "pelvis_height_m": 0.7790373363230889,
+      "root_speed_xy_mps": 0.04972702390363716,
+      "yaw_rate_rps": 0.32974809647277215,
+      "box_speed_mps": 0.11962886573055115,
+      "box_xy_displacement_m": 0.24285476714340448,
+      "local_yaw_rate_rps": 0.3919457860735517,
+      "training_root_speed_xy_mps": 0.07094483354169233,
+      "training_hip_height_m": [
+        0.5288738497799782,
+        0.5294949754836928
+      ],
+      "training_fell_hip": false,
+      "net_hand_forces_N": [
+        29.274051833564755,
+        25.95788594747988
+      ],
+      "training_pickup_valid": true,
+      "training_strict_valid": false,
+      "strict_failed_criteria": [
+        "box_upright",
+        "yaw_speed"
+      ]
+    },
+    "inference_ms": {
+      "p50": 0.29514648485928774,
+      "p95": 0.4471606225706631,
+      "max": 0.9557928424328566
+    },
+    "clipped_steps": 0,
+    "wall_time_s": 20.191536258906126,
+    "limitations": [
+      "One nominal deterministic scene; no hardware or success-rate claim",
+      "No real-camera noise, latency, extrinsic error or stand-to-carrybox dynamics",
+      "target_clipped uses the real 50Hz target clip helper but retains MuJoCo 200Hz PD and hard torque limits",
+      "training diagnostics use net normal hand contact vectors, link-local pelvis yaw, link-origin speed and hip_yaw links; contact dynamics still differ by simulator"
+    ]
+  },
+  {
+    "mode": "deployment_limits",
+    "requested_duration_s": 60.0,
+    "actual_duration_s": 60.00000000001224,
+    "end_reason": "duration",
+    "runtime_error": null,
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "control_dt": 0.02,
+    "physics_dt": 0.005,
+    "box_xy": [
+      1.0,
+      0.0
+    ],
+    "effort_limits": [
+      88.0,
+      88.0,
+      88.0,
+      88.0,
+      88.0,
+      35.0,
+      88.0,
+      88.0,
+      35.0,
+      139.0,
+      139.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+    ],
+    "first_pickup_s": 4.539999999999925,
+    "first_strict_hold_s": null,
+    "longest_pickup_valid_s": 21.94,
+    "longest_strict_valid_s": 0.0,
+    "training_first_pickup_s": 4.539999999999925,
+    "training_first_strict_hold_s": null,
+    "training_longest_pickup_valid_s": 21.94,
+    "training_longest_strict_valid_s": 0.0,
+    "strict_metric_disagreement_steps": 0,
+    "pickup_metric_disagreement_steps": 0,
+    "post_pickup_ground_intervals_s": [
+      [
+        27.279999999998857,
+        29.399999999998435
+      ],
+      [
+        51.40000000000784,
+        53.0800000000087
+      ]
+    ],
+    "final": {
+      "time_s": 60.00000000001224,
+      "steps": 3000,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.774337790455057,
+      "box_position": [
+        0.7612661945127512,
+        -0.04454893985106362,
+        0.970261679766838
+      ],
+      "hand_forces_N": [
+        29.27405183356475,
+        25.957885947479884
+      ],
+      "roll_rad": 0.0004886721992560045,
+      "pitch_rad": -0.13684216927795198,
+      "max_torque_limit_ratio": 1.0,
+      "pelvis_height_m": 0.7790373363230889,
+      "root_speed_xy_mps": 0.04972702390363716,
+      "yaw_rate_rps": 0.32974809647277215,
+      "box_speed_mps": 0.11962886573055115,
+      "box_xy_displacement_m": 0.24285476714340448,
+      "local_yaw_rate_rps": 0.3919457860735517,
+      "training_root_speed_xy_mps": 0.07094483354169233,
+      "training_hip_height_m": [
+        0.5288738497799782,
+        0.5294949754836928
+      ],
+      "training_fell_hip": false,
+      "net_hand_forces_N": [
+        29.274051833564755,
+        25.95788594747988
+      ],
+      "training_pickup_valid": true,
+      "training_strict_valid": false,
+      "strict_failed_criteria": [
+        "box_upright",
+        "yaw_speed"
+      ]
+    },
+    "inference_ms": {
+      "p50": 0.30924449674785137,
+      "p95": 0.46444719191640593,
+      "max": 0.8953721262514591
+    },
+    "clipped_steps": 0,
+    "wall_time_s": 20.40879889484495,
+    "limitations": [
+      "One nominal deterministic scene; no hardware or success-rate claim",
+      "No real-camera noise, latency, extrinsic error or stand-to-carrybox dynamics",
+      "target_clipped uses the real 50Hz target clip helper but retains MuJoCo 200Hz PD and hard torque limits",
+      "training diagnostics use net normal hand contact vectors, link-local pelvis yaw, link-origin speed and hip_yaw links; contact dynamics still differ by simulator"
+    ]
+  },
+  {
+    "mode": "target_clipped",
+    "requested_duration_s": 60.0,
+    "actual_duration_s": 60.00000000001224,
+    "end_reason": "duration",
+    "runtime_error": null,
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "control_dt": 0.02,
+    "physics_dt": 0.005,
+    "box_xy": [
+      1.0,
+      0.0
+    ],
+    "effort_limits": [
+      88.0,
+      88.0,
+      88.0,
+      88.0,
+      88.0,
+      35.0,
+      88.0,
+      88.0,
+      35.0,
+      139.0,
+      139.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      35.0,
+      35.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+    ],
+    "first_pickup_s": 4.079999999999935,
+    "first_strict_hold_s": null,
+    "longest_pickup_valid_s": 22.34,
+    "longest_strict_valid_s": 0.06,
+    "training_first_pickup_s": 4.079999999999935,
+    "training_first_strict_hold_s": null,
+    "training_longest_pickup_valid_s": 22.34,
+    "training_longest_strict_valid_s": 0.06,
+    "strict_metric_disagreement_steps": 0,
+    "pickup_metric_disagreement_steps": 0,
+    "post_pickup_ground_intervals_s": [
+      [
+        25.779999999999156,
+        27.339999999998845
+      ],
+      [
+        40.10000000000206,
+        41.84000000000295
+      ]
+    ],
+    "final": {
+      "time_s": 60.00000000001224,
+      "steps": 3000,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.759450593146958,
+      "box_position": [
+        0.7494814059068967,
+        -0.17604347238716855,
+        0.9254965726187692
+      ],
+      "hand_forces_N": [
+        30.772960518011583,
+        27.3240761054823
+      ],
+      "roll_rad": -0.011754954101803253,
+      "pitch_rad": -0.15074853001731342,
+      "max_torque_limit_ratio": 1.0,
+      "pelvis_height_m": 0.7825518366807646,
+      "root_speed_xy_mps": 0.038670334135712296,
+      "yaw_rate_rps": -0.17998713852832304,
+      "box_speed_mps": 0.11113319134514613,
+      "box_xy_displacement_m": 0.30618763880424177,
+      "local_yaw_rate_rps": -0.1805033701934654,
+      "training_root_speed_xy_mps": 0.03210578244510801,
+      "training_hip_height_m": [
+        0.5309778796353168,
+        0.5351097902417746
+      ],
+      "training_fell_hip": false,
+      "net_hand_forces_N": [
+        30.772960518011583,
+        27.3240761054823
+      ],
+      "training_pickup_valid": true,
+      "training_strict_valid": false,
+      "strict_failed_criteria": [
+        "box_upright"
+      ]
+    },
+    "inference_ms": {
+      "p50": 0.30904856976121664,
+      "p95": 0.46571034472435696,
+      "max": 0.8863741531968117
+    },
+    "clipped_steps": 2395,
+    "wall_time_s": 20.42215319396928,
+    "limitations": [
+      "One nominal deterministic scene; no hardware or success-rate claim",
+      "No real-camera noise, latency, extrinsic error or stand-to-carrybox dynamics",
+      "target_clipped uses the real 50Hz target clip helper but retains MuJoCo 200Hz PD and hard torque limits",
+      "training diagnostics use net normal hand contact vectors, link-local pelvis yaw, link-origin speed and hip_yaw links; contact dynamics still differ by simulator"
+    ]
+  }
+]

@@ -3,13 +3,15 @@ from __future__ import annotations
 import importlib
 import re
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 import prettytable
 
-from instinct_onboard.ros_nodes.base import RealNode
 from instinct_onboard.target_joint_state import TargetJointState
+
+if TYPE_CHECKING:
+    from instinct_onboard.ros_nodes.base import RealNode
 
 
 class ActionTermBase(ABC):

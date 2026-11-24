@@ -1,0 +1,22 @@
+---
+task_id: "ENG-carrybox-audit-20261125"
+language: "zh-CN"
+axes: ["L", "P", "C", "S"]
+risk_tier: "T2"
+status: "DONE"
+changed_files: ["docs/carrybox.md", "agent/plan/carrybox-audit-20261125.md", "agent/task/carrybox-audit-20261125.md", "agent/report/carrybox-audit-20261125.md", "agent/handoff/carrybox-audit-20261125.md", "agent/receipts/carrybox-audit-20261125/attempt1-check1.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check1.stdout.log", "agent/receipts/carrybox-audit-20261125/attempt1-check2.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check2.stdout.log", "agent/receipts/carrybox-audit-20261125/attempt1-check3.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check3.stdout.log", "agent/receipts/carrybox-audit-20261125/baseline.json", "agent/receipts/carrybox-audit-20261125/baseline.mp4", "agent/receipts/carrybox-audit-20261125/baseline_drops.png", "agent/receipts/carrybox-audit-20261125/baseline_frames.png", "agent/receipts/carrybox-audit-20261125/check1.stderr.log", "agent/receipts/carrybox-audit-20261125/check1.stdout.log", "agent/receipts/carrybox-audit-20261125/check2.stderr.log", "agent/receipts/carrybox-audit-20261125/check2.stdout.log", "agent/receipts/carrybox-audit-20261125/check3.stderr.log", "agent/receipts/carrybox-audit-20261125/check3.stdout.log", "agent/receipts/carrybox-audit-20261125/comparison.png", "agent/receipts/carrybox-audit-20261125/deployment_limits.json", "agent/receipts/carrybox-audit-20261125/deployment_limits.mp4", "agent/receipts/carrybox-audit-20261125/deployment_limits_drops.png", "agent/receipts/carrybox-audit-20261125/deployment_limits_frames.png", "agent/receipts/carrybox-audit-20261125/evaluate.py", "agent/receipts/carrybox-audit-20261125/summary.json", "agent/receipts/carrybox-audit-20261125/target_clipped.json", "agent/receipts/carrybox-audit-20261125/target_clipped.mp4", "agent/receipts/carrybox-audit-20261125/target_clipped_drops.png", "agent/receipts/carrybox-audit-20261125/target_clipped_frames.png", "agent/receipts/carrybox-audit-20261125/tests-attempt1.json", "agent/receipts/carrybox-audit-20261125/tests.json"]
+task_contract_sha256: "c6acdf6c509b77f3b8113160dcd437a00b845843b11b8a971e63f35926766043"
+tests: [{"command": ".venv/bin/python -m unittest discover -s tests -p test_carrybox.py -v", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "6dba2e34daf05948eeec6d59075ac28101b139c570ad261e806d84ebcffc2c9e", "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_sha256": "d304d22ef825950d8df29d66ff519982dfe23a14ace1d5203eb1c3a9241ba494", "runner": "run_engineering_tests.py"}, {"command": "env MUJOCO_GL=egl .venv/bin/python agent/receipts/carrybox-audit-20261125/evaluate.py", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "6fd0d2d8ca490fa4f51365e2bfd35d7e918a0c43233fa568a3e1fde032152a93", "stdout_sha256": "734370dbe56f8af8e2942dc7459bd2f20939e6b2e9445a618e50c5e147b53a0e", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "runner": "run_engineering_tests.py"}, {"command": "env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "54245a56a4a09812aaa8b8c21a7cc8958d075c36f7d26d4a4ebcbb8aa1810518", "stdout_sha256": "c585b85064c852e7888a54320a39dbd55250a5a2b9d33dcd899ba22166170df1", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "runner": "run_engineering_tests.py"}]
+artifact: "HANDOFF"
+resume_command: null
+---
+
+本次审计完成，部署生产代码和模型未变更。用户应收到“能搬起但60秒内两次落地、严格持稳失败；数学观测已对照但实机标定/时序/动力学没有完成”的结论，不能表述为可直接稳定上机。
+
+稳定产物见docs/carrybox.md新增2026-11-25审计段，agent/receipts/carrybox-audit-20261125/evaluate.py及summary.json、comparison.png、三组mp4、*_frames.png、*_drops.png。12项unittest、三组回放及pre-commit均通过；首次回执保留，最终tests.json为校正后数据。Report含具体时刻、效果与边界。
+
+恢复诊断命令：`env MUJOCO_GL=egl .venv/bin/python agent/receipts/carrybox-audit-20261125/evaluate.py`（会覆盖本目录回放）。工程检查：`.venv/bin/python -m unittest discover -s tests -p test_carrybox.py -v`、`env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files`。
+
+待后续工程处理：修正生产s2s的hip终止link、strict角速度/线速度参考系与阈值、手法向合力定义；本次独立重算没有改变结论。默认s2s仍是训练力矩上限/200Hz限矩方式，目标预裁剪只在审计脚本中。stand与carrybox动态切换未仿真。真实深度外参、视野、标尺、曝光时间与lowstate同步、IMU/关节物理零位需要设备测量；不能用超时未触发替代同步或标定证明。当前没有物理机器人权限，保持dry-run及现有急停。
+
+第一版诊断脚本使用mjOBJ_BODY局部惯量轴/COM并混入接触摩擦分量，已经修正；不要引用attempt1 stdout中的training指标。最终用mjOBJ_XBODY局部yaw、qvel[:2]的link原点线速度、接触法向向量之和。三组仍是一个确定性标称场景，不是成功率试验。

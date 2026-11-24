@@ -1,0 +1,27 @@
+{
+  "project_url": "https://project-instinct.github.io/hiking-in-the-wild/",
+  "download_url": "https://drive.google.com/file/d/10tQylYHdKLVDVnmVHrygLB70neHnPdoF/view",
+  "archive_sha256": "bbba90bdb77bbab19e74cbe9f556ea0b9330ea9d125ad8271d431aa0e37a6609",
+  "files": {
+    "params/env.yaml": {
+      "bytes": 23649,
+      "sha256": "a024428440bbb4d5324e18fb0b24fbcca743e08210f960657d8f82055103c69e"
+    },
+    "params/agent.yaml": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "exported/actor.onnx": {
+      "bytes": 2509847,
+      "sha256": "270b1333583acbd8d8009b162d09c17db29dfa7fc8fc91bae9aa076ca5c9f14d"
+    },
+    "exported/0-depth_encoder.onnx": {
+      "bytes": 2774502,
+      "sha256": "d0ff357afe47065d9c64e5f465e51ac704a5dccd729890b1eb49fc10887c01d2"
+    },
+    "UPSTREAM_README.md": {
+      "bytes": 2276,
+      "sha256": "ef5f61f763d5fa16f4a6f9598086b5ed624863a8f6ee151ef2439af13efb51ce"
+    }
+  }
+}

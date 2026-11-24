@@ -1,0 +1,498 @@
+{
+  "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+  "requested_duration_s": 20.0,
+  "run_end_reason": "duration",
+  "wall_time_s": 5.707775460090488,
+  "robot_bodies": 44,
+  "robot_mass_kg": 42.341142404591665,
+  "summary": {
+    "time_s": 20.000000000000306,
+    "steps": 1000,
+    "stop_reason": null,
+    "pickup_1s": true,
+    "strict_hold_2s": false,
+    "current_pickup_valid": true,
+    "current_strict_valid": false,
+    "box_bottom_m": 0.7531844291979175,
+    "box_position": [
+      0.8618696998178369,
+      0.16809035832206598,
+      0.931702139802037
+    ],
+    "hand_forces_N": [
+      30.527921686990272,
+      31.96445017124073
+    ],
+    "roll_rad": -0.004051720859502764,
+    "pitch_rad": -0.17213790348830385,
+    "max_torque_limit_ratio": 1.0
+  },
+  "limitations": [
+    "Nominal cuboid scene, no training randomization or paired RSI",
+    "MuJoCo/PhysX contact and friction differ; no hardware validation"
+  ],
+  "trajectory": [
+    {
+      "time_s": 0.02,
+      "steps": 1,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.002547549050000014,
+      "box_position": [
+        1.0,
+        0.0,
+        0.12754754905000001
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": 0.005275046506699657,
+      "pitch_rad": 0.0036030805299071818,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 1.0200000000000002,
+      "steps": 51,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021622397,
+      "box_position": [
+        0.9999999999954226,
+        1.8402191066681332e-13,
+        0.12489224457978378
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.02240056452172585,
+      "pitch_rad": -0.043091391590705325,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 2.019999999999979,
+      "steps": 101,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021622397,
+      "box_position": [
+        0.9999999999954226,
+        1.8393238569321547e-13,
+        0.1248922445797838
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.00803610763770372,
+      "pitch_rad": -0.040820151762186035,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 3.019999999999958,
+      "steps": 151,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.000405944271533093,
+      "box_position": [
+        1.0214558573212218,
+        0.027282880942529023,
+        0.12578129887362163
+      ],
+      "hand_forces_N": [
+        118.65541000205488,
+        65.80655877932301
+      ],
+      "roll_rad": -0.1584169461337926,
+      "pitch_rad": 0.21241356130815564,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 4.0199999999999365,
+      "steps": 201,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7428166822432023,
+      "box_position": [
+        0.9505195573485095,
+        0.10907784249359942,
+        0.9471018080779934
+      ],
+      "hand_forces_N": [
+        28.280884242788158,
+        28.712704136947753
+      ],
+      "roll_rad": 0.009025311050339813,
+      "pitch_rad": -0.18400291869400306,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 5.019999999999915,
+      "steps": 251,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7792009111711551,
+      "box_position": [
+        1.0123356583054688,
+        0.2724195995302515,
+        0.9567719766961573
+      ],
+      "hand_forces_N": [
+        28.049269390366113,
+        26.7912149439396
+      ],
+      "roll_rad": -0.059783760884830624,
+      "pitch_rad": -0.11574219561212412,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 6.019999999999894,
+      "steps": 301,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.8267836155086805,
+      "box_position": [
+        0.9374719281371581,
+        0.2179271093984745,
+        1.0051668667839828
+      ],
+      "hand_forces_N": [
+        29.697381497833554,
+        28.266532763519884
+      ],
+      "roll_rad": -0.005432856626697989,
+      "pitch_rad": -0.17504107876479913,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 7.019999999999873,
+      "steps": 351,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.8152874469418135,
+      "box_position": [
+        0.9389538937423351,
+        0.2528211794666145,
+        0.9989976544768768
+      ],
+      "hand_forces_N": [
+        29.550257259512925,
+        27.547423707892367
+      ],
+      "roll_rad": 0.01628560792766744,
+      "pitch_rad": -0.1632059430855772,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 8.019999999999854,
+      "steps": 401,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.8092579157865573,
+      "box_position": [
+        0.9426150290836274,
+        0.25874620507431884,
+        0.9929180963131827
+      ],
+      "hand_forces_N": [
+        29.026614353641573,
+        27.174949486739344
+      ],
+      "roll_rad": -0.013906572281022656,
+      "pitch_rad": -0.14095990601092848,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 9.02000000000001,
+      "steps": 451,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7885106083042702,
+      "box_position": [
+        0.9196276570699851,
+        0.2551954119225685,
+        0.9809500200809713
+      ],
+      "hand_forces_N": [
+        30.489951086448045,
+        29.294599313192506
+      ],
+      "roll_rad": -0.01797427442840481,
+      "pitch_rad": -0.16879260603850327,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 10.020000000000167,
+      "steps": 501,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.8023638889189673,
+      "box_position": [
+        0.9171662003283693,
+        0.22430142209150394,
+        0.9875979760489546
+      ],
+      "hand_forces_N": [
+        29.593711082320148,
+        27.726482021260082
+      ],
+      "roll_rad": 0.017429040416017227,
+      "pitch_rad": -0.14357235252428271,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 11.020000000000323,
+      "steps": 551,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7899215338286243,
+      "box_position": [
+        0.9255356173877014,
+        0.22450725063956853,
+        0.9743348643148199
+      ],
+      "hand_forces_N": [
+        29.53446212549243,
+        29.425986580951957
+      ],
+      "roll_rad": 0.021469881880706126,
+      "pitch_rad": -0.1480854673917232,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 12.02000000000048,
+      "steps": 601,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7833640671516281,
+      "box_position": [
+        0.912380365154673,
+        0.21806206151604704,
+        0.9696498207280277
+      ],
+      "hand_forces_N": [
+        30.66793528069274,
+        26.21610391862899
+      ],
+      "roll_rad": 0.010808774566671972,
+      "pitch_rad": -0.14165841375827815,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 13.020000000000636,
+      "steps": 651,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7701655575439643,
+      "box_position": [
+        0.9112667292116595,
+        0.2078751064616934,
+        0.9666512730233164
+      ],
+      "hand_forces_N": [
+        31.59124631733165,
+        32.93894453626963
+      ],
+      "roll_rad": -0.026499501613315896,
+      "pitch_rad": -0.1528202280429001,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 14.020000000000792,
+      "steps": 701,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7810993593159073,
+      "box_position": [
+        0.9017220739204604,
+        0.19759664102255903,
+        0.9692067398372727
+      ],
+      "hand_forces_N": [
+        32.38094689447812,
+        28.093594566617334
+      ],
+      "roll_rad": -0.02197465346366401,
+      "pitch_rad": -0.1432654730582193,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 15.020000000000948,
+      "steps": 751,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7667417595271394,
+      "box_position": [
+        0.8915586905830936,
+        0.19353428085118235,
+        0.9432879172326261
+      ],
+      "hand_forces_N": [
+        31.68150366041712,
+        32.670920438687034
+      ],
+      "roll_rad": 0.00011835528474640804,
+      "pitch_rad": -0.15337062876137245,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 16.020000000001097,
+      "steps": 801,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7577838892682335,
+      "box_position": [
+        0.8932819334827871,
+        0.19825539748838927,
+        0.9426466650150328
+      ],
+      "hand_forces_N": [
+        29.569749624473125,
+        29.10632579397366
+      ],
+      "roll_rad": 0.0026147288644054684,
+      "pitch_rad": -0.14211647588195997,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 17.0200000000009,
+      "steps": 851,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7645316331704761,
+      "box_position": [
+        0.8903071875888496,
+        0.17497023547312998,
+        0.9444837665643269
+      ],
+      "hand_forces_N": [
+        32.164805609130745,
+        30.064237420570088
+      ],
+      "roll_rad": 0.0027663050986070207,
+      "pitch_rad": -0.15114876520404125,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 18.0200000000007,
+      "steps": 901,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7620683045433456,
+      "box_position": [
+        0.8860074762098538,
+        0.16108720635716747,
+        0.9394412434193383
+      ],
+      "hand_forces_N": [
+        30.724733921971524,
+        29.844066350172174
+      ],
+      "roll_rad": 0.016495600164195347,
+      "pitch_rad": -0.15153159948626083,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 19.0200000000005,
+      "steps": 951,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7612988764442353,
+      "box_position": [
+        0.8696713126724164,
+        0.17997820320624902,
+        0.9421374487224664
+      ],
+      "hand_forces_N": [
+        30.906469925377717,
+        29.624369247510074
+      ],
+      "roll_rad": -0.009237124897379373,
+      "pitch_rad": -0.1605252308923376,
+      "max_torque_limit_ratio": 1.0
+    },
+    {
+      "time_s": 20.000000000000306,
+      "steps": 1000,
+      "stop_reason": null,
+      "pickup_1s": true,
+      "strict_hold_2s": false,
+      "current_pickup_valid": true,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.7531844291979175,
+      "box_position": [
+        0.8618696998178369,
+        0.16809035832206598,
+        0.931702139802037
+      ],
+      "hand_forces_N": [
+        30.527921686990272,
+        31.96445017124073
+      ],
+      "roll_rad": -0.004051720859502764,
+      "pitch_rad": -0.17213790348830385,
+      "max_torque_limit_ratio": 1.0
+    }
+  ]
+}

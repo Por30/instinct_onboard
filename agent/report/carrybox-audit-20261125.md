@@ -1,0 +1,25 @@
+---
+task_id: "ENG-carrybox-audit-20261125"
+language: "zh-CN"
+axes: ["L", "P", "C", "S"]
+risk_tier: "T2"
+status: "DONE"
+changed_files: ["docs/carrybox.md", "agent/plan/carrybox-audit-20261125.md", "agent/task/carrybox-audit-20261125.md", "agent/report/carrybox-audit-20261125.md", "agent/handoff/carrybox-audit-20261125.md", "agent/receipts/carrybox-audit-20261125/attempt1-check1.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check1.stdout.log", "agent/receipts/carrybox-audit-20261125/attempt1-check2.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check2.stdout.log", "agent/receipts/carrybox-audit-20261125/attempt1-check3.stderr.log", "agent/receipts/carrybox-audit-20261125/attempt1-check3.stdout.log", "agent/receipts/carrybox-audit-20261125/baseline.json", "agent/receipts/carrybox-audit-20261125/baseline.mp4", "agent/receipts/carrybox-audit-20261125/baseline_drops.png", "agent/receipts/carrybox-audit-20261125/baseline_frames.png", "agent/receipts/carrybox-audit-20261125/check1.stderr.log", "agent/receipts/carrybox-audit-20261125/check1.stdout.log", "agent/receipts/carrybox-audit-20261125/check2.stderr.log", "agent/receipts/carrybox-audit-20261125/check2.stdout.log", "agent/receipts/carrybox-audit-20261125/check3.stderr.log", "agent/receipts/carrybox-audit-20261125/check3.stdout.log", "agent/receipts/carrybox-audit-20261125/comparison.png", "agent/receipts/carrybox-audit-20261125/deployment_limits.json", "agent/receipts/carrybox-audit-20261125/deployment_limits.mp4", "agent/receipts/carrybox-audit-20261125/deployment_limits_drops.png", "agent/receipts/carrybox-audit-20261125/deployment_limits_frames.png", "agent/receipts/carrybox-audit-20261125/evaluate.py", "agent/receipts/carrybox-audit-20261125/summary.json", "agent/receipts/carrybox-audit-20261125/target_clipped.json", "agent/receipts/carrybox-audit-20261125/target_clipped.mp4", "agent/receipts/carrybox-audit-20261125/target_clipped_drops.png", "agent/receipts/carrybox-audit-20261125/target_clipped_frames.png", "agent/receipts/carrybox-audit-20261125/tests-attempt1.json", "agent/receipts/carrybox-audit-20261125/tests.json"]
+task_contract_sha256: "c6acdf6c509b77f3b8113160dcd437a00b845843b11b8a971e63f35926766043"
+tests: [{"command": ".venv/bin/python -m unittest discover -s tests -p test_carrybox.py -v", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "6dba2e34daf05948eeec6d59075ac28101b139c570ad261e806d84ebcffc2c9e", "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_sha256": "d304d22ef825950d8df29d66ff519982dfe23a14ace1d5203eb1c3a9241ba494", "runner": "run_engineering_tests.py"}, {"command": "env MUJOCO_GL=egl .venv/bin/python agent/receipts/carrybox-audit-20261125/evaluate.py", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "6fd0d2d8ca490fa4f51365e2bfd35d7e918a0c43233fa568a3e1fde032152a93", "stdout_sha256": "734370dbe56f8af8e2942dc7459bd2f20939e6b2e9445a618e50c5e147b53a0e", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "runner": "run_engineering_tests.py"}, {"command": "env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files", "result": "PASS", "exit_code": 0, "executed": true, "receipt_sha256": "54245a56a4a09812aaa8b8c21a7cc8958d075c36f7d26d4a4ebcbb8aa1810518", "stdout_sha256": "c585b85064c852e7888a54320a39dbd55250a5a2b9d33dcd899ba22166170df1", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "runner": "run_engineering_tests.py"}]
+artifact: "REPORT"
+---
+
+已完成单一标称场景的三组60秒诊断和训练→ROS/s2s对齐审计。新增诊断脚本、视频、曲线、逐帧JSON与使用说明；没有修改策略、生产入口、仿真核心或任何模型，未操作硬件。
+
+三组均运行3000步，未触发跌倒/数值/越矩停止，但均在搬起后出现两次落地再抓起。原s2s与仅部署限矩值对照完全同轨迹：4.54s达到连续搬起1s，落地低于5cm区间为27.28–29.40s和51.40–53.08s，60s末箱底0.774m。目标预裁剪组：4.08s达到连续搬起1s，区间25.78–27.34s及40.10–41.84s，末箱底0.759m，2395/3000步目标被裁剪。已查看全程曲线、关键帧和落地片段，确认失去接触、落地和重新抓起。两次间隔不能从最终pickup锁存值或20s截图看出来。
+
+按训练语义独立重算后，最长连续pickup条件分别为21.94/21.94/22.34s；最长strict条件为0/0/0.06s，均未达到2s。主要失败条件为箱体倾斜，另有速度及接触中断。结果不代表随机位置、其他形状、真实摩擦或相机误差下的成功率。未触发任何训练hip_yaw停止，重算的pickup/strict逐步布尔值在本轮与原指标一致；定义差异仍需修正，不因此认为原指标完全正确。
+
+观测数学契约已对照：pelvis gyro×.25、重力、q-default、dq×.05、上一未缩放动作，6×93完整帧共558维；4×27×48光轴米制深度；完整预测头和动作default+.25×raw；ROS↔训练顺序/腰部符号映射及独立pelvis/torso IMU路径。12项unittest通过，包含实际官方stand/搬箱ONNX和14种入口模拟场景；无ROS2/相机/电机实测。pre-commit全量通过。
+
+实机仍未完全对齐：SDK内参采样已实现，但相机安装外参完全未使用/校验；训练torso位置[.0576235,.01753,.42987]m、向下约47.60°、完整FOV89.16°×58°是要求而非测量结果。50Hz消费60FPS最新图像，允许重复帧；主机收到帧的时间不是曝光时间，深度和lowstate未同步。IMU轴向与关节零位未实测。真实限矩仅hip_roll相对训练139→88Nm；实际50Hz预裁剪目标后交电机PD，与s2s200Hz直接力矩裁剪不同，第三组仅部分复现。ColdStart/stand切入及携箱返回stand的动力学没有覆盖；原按键流程保留。
+
+发现的生产s2s指标差异：hip_pitch/hip_yaw link、world-z/link-local yaw、COM/link-origin速度、>.7/>=.7以及累计法向力绝对值/法向合力范数。审计脚本保留原metrics，同时重算训练指标，并追加训练hip停止条件。专家复核纠正了首次诊断脚本中mjOBJ_BODY局部惯量轴和COM参考点、误计接触摩擦分量的问题；最终使用mjOBJ_XBODY局部yaw、freejoint link线速度及纯法向合力。首次回执和stdout保留为attempt1，首次诊断数值已被校正后的正式JSON替代，不作为结论依据。首次pre-commit只修复Task文件末尾空行；校正后整组冻结检查重跑通过。
+
+复现：`env MUJOCO_GL=egl .venv/bin/python agent/receipts/carrybox-audit-20261125/evaluate.py`。结果位于同目录的summary.json、comparison.png、三组mp4以及*_drops.png；视频为10FPS，深度小窗是最近策略帧，比展示的物理状态早20ms。所有硬件结论均保留未验证边界。

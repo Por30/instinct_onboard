@@ -1,0 +1,11 @@
+{
+  "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+  "samples": 16,
+  "split_onnx_max_abs_error": 1.430511474609375e-06,
+  "inference_modules": [
+    "depth_encoder",
+    "geometry",
+    "grasp",
+    "actor"
+  ]
+}
