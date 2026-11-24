@@ -101,8 +101,11 @@ python scripts/g1_carrybox.py \
 ```bash
 cd /home/cao/instinct_onboard
 
-# MuJoCo 交互仿真，默认运行20秒；空格/Esc停止，R/Backspace重置
+# MuJoCo与深度输入双窗口，默认运行20秒；空格/Esc停止，R/Backspace重置
 .venv/bin/python scripts/g1_carrybox_s2s.py
+
+# 只打开MuJoCo窗口
+.venv/bin/python scripts/g1_carrybox_s2s.py --no-depth-view
 
 # 无界面运行并输出结果；--box-xy 可指定箱子初始位置
 .venv/bin/python scripts/g1_carrybox_s2s.py --headless --duration 20 \
@@ -113,6 +116,14 @@ cd /home/cao/instinct_onboard
 ```
 
 固定输入检查不反馈机器人运动，不能用来判断搬箱效果。s2s 使用真实策略输出推进机器人和箱子动力学。
+
+交互s2s默认同时打开 `G1 carrybox - policy depth input` 窗口，显示最新策略推理实际使用的4帧深度历史。
+左上最旧、右下最新，每帧27×48像素按最近邻放大8倍；固定黑色0.1m、白色3m，显示时间和最新帧最小/最大深度。
+窗口直接读取策略历史，显示处理不会改变模型输入。输入时间是动作生成前的采样时刻，
+比MuJoCo展示的动作执行后状态早一个20ms控制周期；初始化和重置时按策略定义重复首帧填满历史。
+两个窗口都支持空格/Esc停止、R/Backspace重置；停止时保留最后输入，关闭任一窗口会结束整个回放。
+深度窗口使用Python的`tkinter`，当前工作站环境已具备Tk；仅MuJoCo模式加`--no-depth-view`，
+`--headless`模式不会加载Tk或创建窗口。
 
 ## 原项目管线及本次适配
 
