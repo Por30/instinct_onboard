@@ -1,0 +1,35 @@
+{
+  "schema_version": "robotics-engineering-test-receipts.v1",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_carrybox_interaction.py -v",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "cbfa8e2f9c8d1509ad6a77d640528a586eb0489ac8bf04c705bbfde553b9850e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "14eac33d0d32f9d888c8a944624a51dddbc07f3e2cdc1776ca6b3fb5a62f7778",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": "env MUJOCO_GL=glfw xvfb-run -a -s \"-screen 0 1600x1000x24\" .venv/bin/python agent/receipts/carrybox-interaction-20261125/smoke.py",
+      "result": "FAIL",
+      "exit_code": 1,
+      "executed": true,
+      "receipt_sha256": "5bc45b8ba5363265718cf4d8f37604612b9b10c3fd732543af311d33753da84a",
+      "stdout_sha256": "573253b2b5b0ae64313a8de72e1c02bb02960072c79dda50571417b4d79c0a3f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": "env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "54245a56a4a09812aaa8b8c21a7cc8958d075c36f7d26d4a4ebcbb8aa1810518",
+      "stdout_sha256": "c585b85064c852e7888a54320a39dbd55250a5a2b9d33dcd899ba22166170df1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    }
+  ]
+}

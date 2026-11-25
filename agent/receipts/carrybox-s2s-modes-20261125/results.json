@@ -1,0 +1,418 @@
+{
+  "depth": {
+    "result": {
+      "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+      "object_shape": "sphere",
+      "phase": "cold_start",
+      "simulated_support": true,
+      "requested_duration_s": 5.0,
+      "run_end_reason": "depth_window_closed",
+      "wall_time_s": 2.037225117906928,
+      "robot_bodies": 44,
+      "robot_mass_kg": 42.341142404591665,
+      "summary": {
+        "object_shape": "sphere",
+        "time_s": 0.02,
+        "steps": 1,
+        "stop_reason": null,
+        "pickup_1s": false,
+        "strict_hold_2s": false,
+        "current_pickup_valid": false,
+        "current_strict_valid": false,
+        "box_bottom_m": 0.0025476226219343923,
+        "box_position": [
+          1.0,
+          0.0,
+          0.1525476226219344
+        ],
+        "hand_forces_N": [
+          0.0,
+          0.0
+        ],
+        "roll_rad": 0.0,
+        "pitch_rad": -0.0,
+        "max_torque_limit_ratio": 7.176481631177012e-17,
+        "phase": "cold_start",
+        "simulated_support": true
+      },
+      "limitations": [
+        "Fixed-mass primitive object scene, no training randomization or paired RSI",
+        "MuJoCo/PhysX contact and friction differ; no hardware validation"
+      ]
+    },
+    "transitions": [
+      {
+        "update": 1,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 2,
+        "phase": "cold_start",
+        "steps": 2,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 3,
+        "phase": "stand",
+        "steps": 3,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 4,
+        "phase": "carrybox",
+        "steps": 4,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 5,
+        "phase": "stand",
+        "steps": 5,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 6,
+        "phase": "carrybox",
+        "steps": 6,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 7,
+        "phase": "stand",
+        "steps": 7,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 8,
+        "phase": "stand",
+        "steps": 7,
+        "stop": "user_stop",
+        "support": false
+      },
+      {
+        "update": 9,
+        "phase": "stand",
+        "steps": 7,
+        "stop": "user_stop",
+        "support": false
+      },
+      {
+        "update": 10,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 11,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": "user_stop",
+        "support": true
+      },
+      {
+        "update": 12,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 13,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      }
+    ],
+    "native_keys": [
+      65,
+      83,
+      66,
+      65,
+      51,
+      82,
+      83,
+      65,
+      66,
+      82,
+      51
+    ]
+  },
+  "viewer": {
+    "result": {
+      "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+      "object_shape": "sphere",
+      "phase": "cold_start",
+      "simulated_support": true,
+      "requested_duration_s": 5.0,
+      "run_end_reason": "viewer_closed",
+      "wall_time_s": 2.1116449881810695,
+      "robot_bodies": 44,
+      "robot_mass_kg": 42.341142404591665,
+      "summary": {
+        "object_shape": "sphere",
+        "time_s": 0.02,
+        "steps": 1,
+        "stop_reason": null,
+        "pickup_1s": false,
+        "strict_hold_2s": false,
+        "current_pickup_valid": false,
+        "current_strict_valid": false,
+        "box_bottom_m": 0.0025476226219343923,
+        "box_position": [
+          1.0,
+          0.0,
+          0.1525476226219344
+        ],
+        "hand_forces_N": [
+          0.0,
+          0.0
+        ],
+        "roll_rad": 0.0,
+        "pitch_rad": -0.0,
+        "max_torque_limit_ratio": 7.176481631177012e-17,
+        "phase": "cold_start",
+        "simulated_support": true
+      },
+      "limitations": [
+        "Fixed-mass primitive object scene, no training randomization or paired RSI",
+        "MuJoCo/PhysX contact and friction differ; no hardware validation"
+      ]
+    },
+    "transitions": [
+      {
+        "update": 1,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 2,
+        "phase": "cold_start",
+        "steps": 2,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 3,
+        "phase": "stand",
+        "steps": 3,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 4,
+        "phase": "carrybox",
+        "steps": 4,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 5,
+        "phase": "stand",
+        "steps": 5,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 6,
+        "phase": "carrybox",
+        "steps": 6,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 7,
+        "phase": "stand",
+        "steps": 7,
+        "stop": null,
+        "support": false
+      },
+      {
+        "update": 8,
+        "phase": "stand",
+        "steps": 7,
+        "stop": "user_stop",
+        "support": false
+      },
+      {
+        "update": 9,
+        "phase": "stand",
+        "steps": 7,
+        "stop": "user_stop",
+        "support": false
+      },
+      {
+        "update": 10,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 11,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": "user_stop",
+        "support": true
+      },
+      {
+        "update": 12,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      },
+      {
+        "update": 13,
+        "phase": "cold_start",
+        "steps": 1,
+        "stop": null,
+        "support": true
+      }
+    ],
+    "native_keys": [
+      65,
+      83,
+      66,
+      65,
+      51,
+      82,
+      83,
+      65,
+      66,
+      82,
+      51
+    ]
+  },
+  "headless_cold_start": {
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "object_shape": "cuboid",
+    "phase": "cold_start",
+    "simulated_support": true,
+    "requested_duration_s": 1.0,
+    "run_end_reason": "duration",
+    "wall_time_s": 0.06933382991701365,
+    "robot_bodies": 44,
+    "robot_mass_kg": 42.341142404591665,
+    "summary": {
+      "object_shape": "cuboid",
+      "time_s": 1.0000000000000007,
+      "steps": 50,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021627948,
+      "box_position": [
+        1.0000000000025382,
+        5.588529433124736e-12,
+        0.12489224457978372
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": 0.0,
+      "pitch_rad": -0.0,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "cold_start",
+      "simulated_support": true
+    },
+    "limitations": [
+      "Fixed-mass primitive object scene, no training randomization or paired RSI",
+      "MuJoCo/PhysX contact and friction differ; no hardware validation"
+    ]
+  },
+  "headless_stand": {
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "object_shape": "cuboid",
+    "phase": "stand",
+    "simulated_support": false,
+    "requested_duration_s": 10.0,
+    "run_end_reason": "duration",
+    "wall_time_s": 0.7202705738600343,
+    "robot_bodies": 44,
+    "robot_mass_kg": 42.341142404591665,
+    "summary": {
+      "object_shape": "cuboid",
+      "time_s": 10.000000000000163,
+      "steps": 500,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000051095,
+        6.096384881732026e-17,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": 0.05774122866229277,
+      "pitch_rad": -0.05323845556778507,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    "limitations": [
+      "Fixed-mass primitive object scene, no training randomization or paired RSI",
+      "MuJoCo/PhysX contact and friction differ; no hardware validation"
+    ]
+  },
+  "headless_carrybox": {
+    "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+    "object_shape": "cuboid",
+    "phase": "carrybox",
+    "simulated_support": false,
+    "requested_duration_s": 0.2,
+    "run_end_reason": "duration",
+    "wall_time_s": 0.04596575698815286,
+    "robot_bodies": 44,
+    "robot_mass_kg": 42.341142404591665,
+    "summary": {
+      "object_shape": "cuboid",
+      "time_s": 0.2000000000000001,
+      "steps": 10,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.0001170498219836974,
+      "box_position": [
+        0.999999999995466,
+        1.8216398341288795e-13,
+        0.1248829501780697
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.0009129388705617441,
+      "pitch_rad": -0.11588993891952652,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "carrybox",
+      "simulated_support": false
+    },
+    "limitations": [
+      "Fixed-mass primitive object scene, no training randomization or paired RSI",
+      "MuJoCo/PhysX contact and friction differ; no hardware validation"
+    ]
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "checkpoint_sha256": "659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355",
+  "object_shape": "cuboid",
+  "phase": "stand",
+  "simulated_support": false,
+  "requested_duration_s": 5.0,
+  "run_end_reason": "duration",
+  "wall_time_s": 0.3723885458894074,
+  "robot_bodies": 44,
+  "robot_mass_kg": 42.341142404591665,
+  "summary": {
+    "object_shape": "cuboid",
+    "time_s": 5.019999999999915,
+    "steps": 251,
+    "stop_reason": null,
+    "pickup_1s": false,
+    "strict_hold_2s": false,
+    "current_pickup_valid": false,
+    "current_strict_valid": false,
+    "box_bottom_m": -0.00010775542021618234,
+    "box_position": [
+      1.0000000000014648,
+      -3.716545399955504e-13,
+      0.12489224457978382
+    ],
+    "hand_forces_N": [
+      0.0,
+      0.0
+    ],
+    "roll_rad": -0.00280907991868576,
+    "pitch_rad": 0.08865236489927002,
+    "max_torque_limit_ratio": 1.0,
+    "phase": "stand",
+    "simulated_support": false
+  },
+  "limitations": [
+    "Fixed-mass primitive object scene, no training randomization or paired RSI",
+    "MuJoCo/PhysX contact and friction differ; no hardware validation"
+  ],
+  "trajectory": [
+    {
+      "object_shape": "cuboid",
+      "time_s": 0.02,
+      "steps": 1,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": 0.002547549050000014,
+      "box_position": [
+        1.0,
+        0.0,
+        0.12754754905000001
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.001992447315025714,
+      "pitch_rad": 0.02393636615676959,
+      "max_torque_limit_ratio": 0.4113739198566092,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 1.0200000000000002,
+      "steps": 51,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.0001077554202162101,
+      "box_position": [
+        1.0000000000014648,
+        -3.717570730413972e-13,
+        0.12489224457978379
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.0318170931278445,
+      "pitch_rad": 0.0172042446639601,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 2.019999999999979,
+      "steps": 101,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000014648,
+        -3.717384469310199e-13,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.07124754119367326,
+      "pitch_rad": 0.06869979378658721,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 3.019999999999958,
+      "steps": 151,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000014648,
+        -3.717360268788394e-13,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.046018062775637254,
+      "pitch_rad": 0.06706429703604022,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 4.0199999999999365,
+      "steps": 201,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000014648,
+        -3.7171673906785167e-13,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.05277030203042207,
+      "pitch_rad": 0.12056729532266257,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 5.019999999999915,
+      "steps": 251,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000014648,
+        -3.716545399955504e-13,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.00280907991868576,
+      "pitch_rad": 0.08865236489927002,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    },
+    {
+      "object_shape": "cuboid",
+      "time_s": 5.019999999999915,
+      "steps": 251,
+      "stop_reason": null,
+      "pickup_1s": false,
+      "strict_hold_2s": false,
+      "current_pickup_valid": false,
+      "current_strict_valid": false,
+      "box_bottom_m": -0.00010775542021618234,
+      "box_position": [
+        1.0000000000014648,
+        -3.716545399955504e-13,
+        0.12489224457978382
+      ],
+      "hand_forces_N": [
+        0.0,
+        0.0
+      ],
+      "roll_rad": -0.00280907991868576,
+      "pitch_rad": 0.08865236489927002,
+      "max_torque_limit_ratio": 1.0,
+      "phase": "stand",
+      "simulated_support": false
+    }
+  ]
+}

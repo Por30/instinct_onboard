@@ -18,6 +18,15 @@ import numpy as np
 from instinct_onboard.agents.carrybox_agent import CarryBoxAgent
 from instinct_onboard.carrybox_policy import rotation_wxyz, sha256
 
+OBJECT_SHAPES = {
+    "cuboid": ("box", ".15 .15 .125"),
+    "cube": ("box", ".15 .15 .15"),
+    "sphere": ("sphere", ".15"),
+    "cylinder": ("cylinder", ".15 .125"),
+    "capsule": ("capsule", ".1 .075"),
+    "ellipsoid": ("ellipsoid", ".18 .13 .125"),
+}
+
 
 def make_scene(bundle, cfg, box_xy):
     root = ET.parse(bundle / "robot/g1.urdf").getroot()
@@ -166,6 +175,8 @@ class CarryBoxSim:
         self.vadr = self.model.jnt_dofadr[joints]
         self.actuators = [self.model.actuator(name).id for name in self.sim_joint_names]
         self.box = self.model.body("box").id
+        self.object_shape = "cuboid"
+        self.object_geom = self.model.geom("box_geom").id
         box_joint = self.model.joint("box_free").id
         self.bq = self.model.jnt_qposadr[box_joint]
         self.bv = self.model.jnt_dofadr[box_joint]
@@ -178,11 +189,42 @@ class CarryBoxSim:
         self.dt = cfg["control_dt"]
         self.reset()
 
+    def set_object_shape(self, shape):
+        geom_type, size = OBJECT_SHAPES[shape]
+        reference = mujoco.MjModel.from_xml_string(
+            f'<mujoco><worldbody><body><freejoint/><geom type="{geom_type}" '
+            f'size="{size}" mass="1.125"/></body></worldbody></mujoco>'
+        )
+        for field in ("geom_type", "geom_size", "geom_rbound", "geom_aabb"):
+            getattr(self.model, field)[self.object_geom] = getattr(reference, field)[0]
+        for field in ("body_mass", "body_inertia", "body_iquat"):
+            getattr(self.model, field)[self.box] = getattr(reference, field)[1]
+        # The single-geom body's collision BVH uses the compiled inertial frame.
+        self.model.bvh_aabb[self.model.body_bvhadr[self.box]] = reference.bvh_aabb[reference.body_bvhadr[1]]
+        self.object_shape = shape
+        self.model.qpos0[self.bq + 2] = self.object_half_height(np.array([0.0, 0.0, 1.0])) + 0.005
+        mujoco.mj_setConst(self.model, self.data)
+        self.reset()
+
+    def object_half_height(self, vertical):
+        """Support distance along world up, expressed in the object's local frame."""
+        size = self.model.geom_size[self.object_geom]
+        if self.object_shape in ("cuboid", "cube"):
+            return float(abs(vertical) @ size)
+        if self.object_shape == "sphere":
+            return float(size[0])
+        if self.object_shape == "ellipsoid":
+            return float(np.linalg.norm(vertical * size))
+        if self.object_shape == "capsule":
+            return float(size[0] + size[1] * abs(vertical[2]))
+        return float(size[0] * np.linalg.norm(vertical[:2]) + size[1] * abs(vertical[2]))
+
     def reset(self):
         mujoco.mj_resetData(self.model, self.data)
         self.data.qpos[:7] = self.cfg["default_root_pose"]
         self.data.qpos[self.qadr] = self.agent.default_joint_pos
-        self.data.qpos[self.bq : self.bq + 7] = [*self.box_xy, 0.13, 1, 0, 0, 0]
+        height = self.object_half_height(np.array([0.0, 0.0, 1.0])) + 0.005
+        self.data.qpos[self.bq : self.bq + 7] = [*self.box_xy, height, 1, 0, 0, 0]
         self.agent.reset()
         self.steps = self.pickup_steps = self.strict_steps = 0
         self.pickup_success = self.strict_success = False
@@ -216,20 +258,34 @@ class CarryBoxSim:
                 -0.01 * matrix @ (self.model.body_inertia[body] * (matrix.T @ velocity[:3]))
             )
 
-    def step(self):
+    def step(self, external_force=None, *, target=None, support_root=False):
         if self.stop_reason:
             raise RuntimeError(f"Simulation is stopped: {self.stop_reason}; reset required")
         try:
-            target = self.agent.act(*self.observations(), self.data.time, self.data.time)
+            if target is None:
+                target = self.agent.act(*self.observations(), self.data.time, self.data.time)
+            for field in ("position", "velocity", "effort", "kp", "kd"):
+                values = getattr(target, field)
+                if values.shape != (29,) or not np.isfinite(values).all():
+                    raise ValueError(f"Invalid simulation target: {field}")
             for _ in range(round(self.dt / self.model.opt.timestep)):
                 torque = (
-                    target.kp * (target.position - self.data.qpos[self.qadr]) - target.kd * self.data.qvel[self.vadr]
+                    target.kp * (target.position - self.data.qpos[self.qadr])
+                    + target.kd * (target.velocity - self.data.qvel[self.vadr])
+                    + target.effort
                 )
                 if not np.isfinite(torque).all():
                     raise FloatingPointError("Nonfinite PD torque")
                 self.data.ctrl[self.actuators] = np.clip(torque, -self.effort, self.effort)
                 self.apply_damping()
+                if external_force is not None:
+                    self.data.xfrc_applied[:] += external_force
                 mujoco.mj_step(self.model, self.data)
+                if support_root:
+                    # Simulate human support during cold start; never used by stand/carrybox.
+                    self.data.qpos[:7] = self.cfg["default_root_pose"]
+                    self.data.qvel[:6] = 0
+                    mujoco.mj_forward(self.model, self.data)
                 if not np.isfinite(np.concatenate((self.data.qpos, self.data.qvel, self.data.qacc))).all():
                     raise FloatingPointError("Nonfinite MuJoCo state")
                 for warning in (
@@ -268,7 +324,7 @@ class CarryBoxSim:
         box_r = rotation_wxyz(self.data.qpos[self.bq + 3 : self.bq + 7])
         root_r = rotation_wxyz(self.data.qpos[3:7])
         height = float(self.data.qpos[self.bq + 2])
-        clearance = height - float(abs(box_r[2]) @ np.array([0.15, 0.15, 0.125]))
+        clearance = height - self.object_half_height(box_r[2])
         speed = float(np.linalg.norm(self.data.qvel[self.bv : self.bv + 3]))
         head = float(self.data.xpos[self.head, 2])
         roll = float(np.arctan2(root_r[2, 1], root_r[2, 2]))
@@ -307,6 +363,7 @@ class CarryBoxSim:
                 self.stop(name)
                 break
         return dict(
+            object_shape=self.object_shape,
             time_s=float(self.data.time),
             steps=self.steps,
             stop_reason=self.stop_reason,

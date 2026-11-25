@@ -1,0 +1,35 @@
+{
+  "schema_version": "robotics-engineering-test-receipts.v1",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_carrybox_s2s_modes.py -v",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "0b8db419928fb7248631643b794be33af68572fa2ac9a87669d7f9e4d948df5e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "93cc77bd83b28719e668411dd666ec8e05409e423fbd157170d77d0de7a4efde",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": "env MUJOCO_GL=glfw xvfb-run -a -s \"-screen 0 1600x1000x24\" .venv/bin/python agent/receipts/carrybox-s2s-modes-20261125/smoke.py",
+      "result": "FAIL",
+      "exit_code": 1,
+      "executed": true,
+      "receipt_sha256": "e2b96e24df895db315350f2552447fa74a7fa51e5ddcc504b54af71074af3442",
+      "stdout_sha256": "30d0529211777a21612d8cc619b5cda29cfc689ec1d6a47c69ea2c1f28a4f852",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    },
+    {
+      "command": "env PRE_COMMIT_HOME=.cache/pre-commit .venv/bin/pre-commit run --all-files",
+      "result": "PASS",
+      "exit_code": 0,
+      "executed": true,
+      "receipt_sha256": "54245a56a4a09812aaa8b8c21a7cc8958d075c36f7d26d4a4ebcbb8aa1810518",
+      "stdout_sha256": "c585b85064c852e7888a54320a39dbd55250a5a2b9d33dcd899ba22166170df1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runner": "run_engineering_tests.py"
+    }
+  ]
+}

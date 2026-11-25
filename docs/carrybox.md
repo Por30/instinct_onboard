@@ -101,14 +101,15 @@ python scripts/g1_carrybox.py \
 ```bash
 cd /home/cao/instinct_onboard
 
-# MuJoCo与深度输入双窗口，默认运行20秒；空格/Esc停止，R/Backspace重置
-.venv/bin/python scripts/g1_carrybox_s2s.py
+# MuJoCo与深度双窗口：自动cold_start，S站立，A搬箱，S返回stand
+MUJOCO_GL=glfw .venv/bin/python scripts/g1_carrybox_s2s.py \
+  --bundle models/carrybox_wall19 --standdir models/stand_onboard --duration 60
 
 # 只打开MuJoCo窗口
 .venv/bin/python scripts/g1_carrybox_s2s.py --no-depth-view
 
 # 无界面运行并输出结果；--box-xy 可指定箱子初始位置
-.venv/bin/python scripts/g1_carrybox_s2s.py --headless --duration 20 \
+.venv/bin/python scripts/g1_carrybox_s2s.py --headless --start-mode carrybox --duration 20 \
   --output agent/receipts/carrybox-wall19/s2s.json
 
 # 无ROS、无相机、无电机消息的固定输入推理检查
@@ -117,13 +118,54 @@ cd /home/cao/instinct_onboard
 
 固定输入检查不反馈机器人运动，不能用来判断搬箱效果。s2s 使用真实策略输出推进机器人和箱子动力学。
 
-交互s2s默认同时打开 `G1 carrybox - policy depth input` 窗口，显示最新策略推理实际使用的4帧深度历史。
+s2s默认自动进入`cold_start`，用固定根位姿模拟人工支撑扶正，窗口明确显示`support ON`。
+至少执行过一个cold_start控制步，且按`S`时实测关节与冷启动目标误差均不超过0.2rad，才进入官方stand策略，并撤去支撑。
+提前按S不会排队自动生效；到位后需要重新按S。cold_start保持搬箱默认关节姿态，位置目标每步最多偏离实测位置0.2rad，增益为搬箱的2倍，与实机入口一致。
+
+| s2s按键 | 操作 | 对应实机流程 |
+| --- | --- | --- |
+| 启动 | 自动cold_start，仿真支撑扶正 | 实机A仅初始化手柄消息，程序自动cold_start |
+| S | cold_start到位后进入stand；搬箱中立即返回stand | R1 |
+| A | 仅从stand进入搬箱 | L1；**仿真A与实机A含义不同** |
+| 空格 / Esc / B | 停止并清零仿真控制，锁存停止状态 | L2 / R2 / B急停 |
+| R / Backspace | 重置回cold_start | 仿真专用重新开始；不是实机OEM组合键 |
+
+停止后S/A和形状键不会重新启动，必须按R；同一批输入急停优先，其次R，再其次S。
+返回stand只切换控制策略，不保证保箱或放箱。实机仍按A初始化→人工支撑/到位后新按R1→站稳后L1→R1返回，运行中不要重复OEM复位组合键。
+`--start-mode stand`先实际执行一个20ms冷启动控制步，再切入无支撑站立，保留上一条已执行目标作为动作历史；
+`--start-mode carrybox`可直接回放搬箱；默认包括headless均为cold_start。
+模型缺失或推理故障会报错停控，不自动替代为姿态保持。
+
+交互s2s默认同时打开深度窗口；搬箱模式显示最新策略推理实际使用的4帧深度历史。
 左上最旧、右下最新，每帧27×48像素按最近邻放大8倍；固定黑色0.1m、白色3m，显示时间和最新帧最小/最大深度。
 窗口直接读取策略历史，显示处理不会改变模型输入。输入时间是动作生成前的采样时刻，
 比MuJoCo展示的动作执行后状态早一个20ms控制周期；初始化和重置时按策略定义重复首帧填满历史。
-两个窗口都支持空格/Esc停止、R/Backspace重置；停止时保留最后输入，关闭任一窗口会结束整个回放。
+stand使用官方模型的8帧18×32全零深度输入；cold_start和stand期间，深度窗口只显示单帧实时相机预览并标注“未被策略消费”，不会把旧搬箱历史当成当前输入。
+两个窗口都支持S/A切换、空格/Esc/B停止、R/Backspace重置；停止时仿真冻结，关闭任一窗口会结束整个回放。
 深度窗口使用Python的`tkinter`，当前工作站环境已具备Tk；仅MuJoCo模式加`--no-depth-view`，
 `--headless`模式不会加载Tk或创建窗口。
+
+在MuJoCo窗口中双击物体选中，然后按住`Ctrl`并右键拖拽施加平移扰动力；
+加`Shift`可在水平面拖动，不加时在竖直平面拖动。松开右键后撤销鼠标外力。
+裸右键仍平移视角，左键旋转视角，滚轮缩放，保留[MuJoCo原生鼠标操作](https://mujoco.readthedocs.io/en/3.3.7/programming/visualization.html)。
+鼠标外力会传递到每个物理子步，并与已有阻尼叠加；停止、重置、切换形状、退出均清除扰动。
+
+两个窗口均支持数字键切换物体（运行中切换重置机器人、物体和策略历史，回到cold_start，从零计时；急停后需先按R）：
+
+| 按键 | 形状 | 尺寸（米） |
+| --- | --- | --- |
+| 1 | 长方体，默认 | 0.30 × 0.30 × 0.25 |
+| 2 | 正方体 | 边长0.30 |
+| 3 | 球体 | 半径0.15 |
+| 4 | 圆柱 | 半径0.15、高0.25 |
+| 5 | 胶囊体 | 半径0.10、圆柱段长0.15、总长0.35 |
+| 6 | 椭球 | 半轴0.18、0.13、0.125 |
+
+各形状质量均为1.125kg、摩擦参数相同，惯量和碰撞边界随形状更新。数字键用于切换物体时，
+恢复默认几何组可见性，避免与MuJoCo原有数字快捷键冲突。`R`重置会保留当前形状。
+也可用`--object-shape cuboid|cube|sphere|cylinder|capsule|ellipsoid`指定启动形状，兼容`--headless`。
+输出JSON记录当前形状，物体底部高度按实际形状计算；其他形状是额外仿真探查，不代表策略已针对这些物体验证。
+鼠标外力数值检查已通过，但上一轮Xvfb原生鼠标选中测试尚未通过；模式切换测试不替代该验证。
 
 ## 原项目管线及本次适配
 
@@ -153,8 +195,8 @@ cd /home/cao/instinct_onboard
 ROS入口的节点保持TorsoBase约定以复用原 `ParkourStandAgent`，在搬箱策略边界按名称重排关节并转换腰部符号。
 q/dq和position/velocity/effort转换符号，kp/kd只重排。搬箱推理直接使用pelvis IMU，stand仍使用torso IMU；
 不通过改写全局IMU getter切换坐标。MuJoCo继续使用CarryBox配置。
-ROS有效限矩取原TorsoBase与重排后搬箱训练限矩的逐项较小值；例如髋roll采用原部署88Nm而非训练139Nm，
-腰roll/pitch和踝采用搬箱35Nm而非原部署50Nm。这与s2s训练限矩不完全相同，须在实机验证中单独记录。
+ROS及当前s2s模式入口的有效限矩均取原TorsoBase与重排后搬箱训练限矩的逐项较小值；例如髋roll采用原部署88Nm而非训练139Nm，
+腰roll/pitch和踝采用搬箱35Nm而非原部署50Nm。后文已有60秒回放采用此前纯搬箱s2s的训练限矩，不能视为当前模式入口的重复验证。
 本策略不接收速度命令、阶段标志、物体真值、critic或AMP输入。不能把它替换为原parkour的actor，也不能沿用parkour深度归一化。
 
 ## 部署包与重新导出
@@ -220,8 +262,8 @@ ROS有效限矩取原TorsoBase与重排后搬箱训练限矩的逐项较小值�
 | 深度值与内参采样 | 米制光轴深度、范围、4帧历史及训练射线一致；读取SDK真实内参，视野不足或非零畸变会拒绝运行 |
 | 相机外参 | **实机未对齐确认**：入口没有使用或校验相机相对torso的安装位置/旋转 |
 | 传感器时序 | **存在差异**：仿真50Hz同步新帧；实机50Hz取60FPS最新帧，可重复且未与lowstate采集时刻同步 |
-| 控制链 | **存在差异**：hip_roll有效上限139→88Nm，实机50Hz目标预裁剪与仿真200Hz直接限矩不同 |
-| 模式切换 | 按键和历史重置已测；cold_start→stand→carrybox及携箱返回stand的动力学未验证 |
+| 控制链 | 当前s2s模式入口已与ROS取相同限矩交集（hip_roll 88Nm）；此前60秒结果用139Nm。实机50Hz目标预裁剪与仿真200Hz直接限矩仍不同 |
+| 模式切换 | 双窗口cold_start→S stand→A carrybox→S stand及急停/R恢复已测；短时无支撑stand通过，携箱返回stand后的稳定性未验证 |
 
 训练相机需要相对torso位置`[0.0576235,0.01753,0.42987]`m、上述wxyz旋转（向下约47.60°）。
 完整针孔视场约89.16°×58°，最外侧像素中心覆盖约87.95°×56.18°。
@@ -240,6 +282,17 @@ ROS有效限矩取原TorsoBase与重排后搬箱训练限矩的逐项较小值�
 ```bash
 env MUJOCO_GL=egl .venv/bin/python agent/receipts/carrybox-audit-20261125/evaluate.py
 ```
+
+## 2026-11-25 s2s模式验证
+
+官方stand的15步输入/目标与真实`ParkourStandAgent`数值对照通过，包含历史填充、重置、跨模式上一目标和源状态不被原地缩放。
+TorsoBase关节/腰部符号、torso link角速度与重力投影、冷启动到位守卫和推理故障停控均通过检查。
+Tk和MuJoCo原生按键验证覆盖cold_start→stand→carrybox→stand、急停优先/锁存、R重置、形状重置回cold_start以及关闭任一窗口退出。
+无DISPLAY检查覆盖三个起始模式；stand回放总计10秒，其中先执行20ms受支撑cold_start，随后9.98秒无支撑stand，未触发停止。
+
+检查中修正了MuJoCo惯性局部坐标与torso link坐标的差异；另发现跳过cold_start的快捷启动在5.96秒倾倒，现已改为实际执行一条冷启动目标再进入stand。
+该结果仅说明当前固定初态下的短时站立与切换逻辑通过，不代表长期站立、携箱返stand或实机稳定性已验证。
+当前证据见`agent/receipts/carrybox-s2s-modes-20261125/results.json`及同目录`tests.json`；`*-before-gyro-fix.json`仅为修正前诊断，不作当前通过证据。
 
 ## ROS入口及待实机验证项
 
