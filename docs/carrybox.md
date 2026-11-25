@@ -2,7 +2,7 @@
 
 本入口适配指定的 `05_stage5_from15000/model_29999.pt`，checkpoint SHA256 为
 `659d56613321bf60706a401e81f3924d6cb2f8eac22bcaaa41fb64a9a8e5b355`。
-当前工作站的部署包位于 `models/carrybox_wall19`，无需重新导出即可运行。
+分支内的 `deployment/carrybox-models.tar.gz` 包含搬箱与官方stand模型，解包后无需重新导出。
 
 ## 从cel_instinct分支部署到机载电脑
 
@@ -10,7 +10,7 @@
 实际相机外参、IMU/关节标定、传感器时序及模式切换动力学仍需验证。以下是后续部署流程，
 先完成模型/环境迁移和dry-run，再在现场验证条件具备后接管电机。
 
-### 1. 拉取代码并迁移模型
+### 1. 拉取代码并解包模型
 
 在机载电脑选定的工作目录执行：
 
@@ -18,35 +18,35 @@
 git clone --branch cel_instinct --single-branch \
   https://github.com/Por30/instinct_onboard.git
 cd instinct_onboard
-mkdir -p .cache
 ```
 
-Git仓库包含代码、文档、测试和回放证据，**不包含被项目忽略的models目录**。
-当前工作站已准备模型包 `.cache/carrybox-deploy-models.tar.gz` 及同名 `.sha256` 文件，
-包含 `models/carrybox_wall19` 与官方 `models/stand_onboard`，不需要原始训练checkpoint才能运行。
-从当前工作站复制到已经克隆代码的机载电脑，替换示例用户名与主机名：
+已有该分支的电脑，在仓库根目录更新（先保存自己的本地改动）：
 
 ```bash
-cd /home/cao/instinct_onboard
-scp .cache/carrybox-deploy-models.tar.gz .cache/carrybox-deploy-models.tar.gz.sha256 \
-  ROBOT_USER@ROBOT_HOST:~/instinct_onboard/.cache/
+git switch cel_instinct
+git pull --ff-only https://github.com/Por30/instinct_onboard.git cel_instinct
 ```
 
-示例假定机载仓库为 `~/instinct_onboard`；实际克隆位置不同则同步修改目标路径。
-在机载仓库根目录校验并解包（首次安装；已有同名模型时先核对版本）：
+仓库直接包含约19.5MB的模型归档及SHA256校验文件，无需单独下载或复制原始训练checkpoint。
+归档包含完整的 `models/carrybox_wall19` 与官方 `models/stand_onboard`。
+在仓库根目录校验并解包（首次安装）：
 
 ```bash
-sha256sum -c .cache/carrybox-deploy-models.tar.gz.sha256
-tar -xzf .cache/carrybox-deploy-models.tar.gz
+sha256sum -c deployment/carrybox-models.tar.gz.sha256
+tar --keep-old-files -xzf deployment/carrybox-models.tar.gz
 ```
 
-也可直接复制这两个完整模型目录。不要只复制actor，搬箱需要encoder、manifest及仿真资产；
-stand还需要原配置文件。不要复制工作站的`.venv`到不同架构的机载电脑。
+校验输出应为 `deployment/carrybox-models.tar.gz: OK`。`--keep-old-files`会拒绝覆盖已有文件；
+已有同名模型时先核对版本并自行备份，模型归档未变时更新代码无需重复解包。
+解出的 `models/` 仍被Git忽略，实际分发的是受Git跟踪的归档。
+不要只复制actor，搬箱需要encoder、manifest及仿真资产，stand需要原配置文件。
+不要复制工作站的`.venv`到不同架构的机载电脑。
 
 ### 2. 使用原深度locomotion的ROS/Python环境
 
 使用原 `g1_parkour.py` 已能工作的环境，先加载ROS2和Unitree消息工作空间，再激活原机载Python环境。
 新机器按项目README安装ROS2、`unitree_hg`/`unitree_go`、对应架构的`crc_module`、RealSense SDK和Python依赖。
+首次在该环境安装本仓库时，执行 `python -m pip install -e .`。
 在仓库根目录检查实际部署所需的导入和模型前向：
 
 ```bash
@@ -76,6 +76,18 @@ python scripts/g1_carrybox.py \
 dry-run不会把机器人移动到冷启动目标，未满足实测到位条件时R1不进入stand，这是预期行为。
 相机视野不足、畸变、输入缺失或超时应先解决，不能通过关闭检查来继续。
 
+**dry-run通过只说明代码检查通过，不等于实机观测已对齐。** 当前实机入口没有专用的观测显示、
+完整输入记录及回放验收功能；s2s深度窗口只显示仿真输入。后续上机需逐项测量并留存以下对照，
+不能仅根据程序正常启动就判断对齐完成：
+
+| 验收项 | 策略要求与现场核对内容 |
+| --- | --- |
+| 深度数值与历史 | SDK原始深度480×270、60FPS，按真实内参采样为27×48米制光轴深度；范围0.1–3m，缺失填3m，无归一化；最终输入 `[1,4,27,48]` 从旧到新。用已知距离物体核对值、方向与视野。 |
+| 相机外参 | 相对torso位置 `[0.0576235,0.01753,0.42987]`m，wxyz旋转对应归一化 `[0.91495,0,0.40355,0]`，向下约47.60°。这是训练相机安装坐标约定，不能直接当作SDK光学坐标旋转；入口未校验实际安装外参。 |
+| 本体输入与历史 | `[1,558]`，6个完整93维帧从旧到新；每帧依次为gyro×0.25、重力投影、q−default、dq×0.05、上一原始动作29维。检查关节顺序、腰部符号、零位和运动方向。 |
+| IMU与动作 | 搬箱使用pelvis LowState IMU，stand使用torso secondary IMU；四元数为单位wxyz，正立重力投影应接近 `[0,0,-1]`。搬箱限幅前目标为default+0.25×action，上一动作不是裁剪后的电机目标。 |
+| 时序 | 策略50Hz取相机60FPS最新帧，可能重复，尚未按传感器采集时间与lowstate同步。测量采集到推理的延迟和抖动；现有超时检查及主机收帧时间不能替代同步验收。 |
+
 ### 4. 现场接管及原模式操作
 
 完成上述核对、软件急停检查和受支撑验证后，退出dry-run。由现场操作者执行原项目前置操作：
@@ -91,6 +103,7 @@ python scripts/g1_carrybox.py \
 用A初始化手柄消息，程序自动cold_start；人工支撑扶正、关节到位后松开再按**R1**进入stand；
 站稳后按**L1**进入carrybox，按**R1**返回stand。搬箱没有摇杆速度命令。
 程序运行中**L2/R2/B**为急停，不能再次执行上面的OEM组合复位键；Ctrl-C也会退出并关闭电机。
+**实机A只初始化手柄消息，进入搬箱用L1；Select没有绑定急停。** 仿真键盘S/A只用于s2s。
 故障锁存后退出并排除原因，再重启。携箱返回原stand可能松手，不能将R1理解为保箱或放箱动作。
 本分支没有自动切换OEM运动模式；应用模式流程与固件模式是两回事。
 
@@ -217,7 +230,8 @@ ROS及当前s2s模式入口的有效限矩均取原TorsoBase与重排后搬箱�
 - `robot/g1.urdf`、`robot/meshes`、`physics.json`：独立s2s资产及同checkpoint的实际Isaac标称物理采集。
 - `validation.json`：训练前向与分离式ONNX数值对照。
 
-`models/` 已被本项目 `.gitignore` 忽略。迁移机器时应复制整个bundle；部署和s2s运行不读取训练仓库，只有导出及来源对照测试需要来源文件。
+`models/` 已被本项目 `.gitignore` 忽略；本分支通过 `deployment/carrybox-models.tar.gz` 分发完整bundle和stand。
+部署和s2s运行不读取训练仓库，只有导出及来源对照测试需要来源文件。
 物理profile来源于本机 `unitree_rl_lab_carrybox/docs/sim2sim_wall19/isaac_profile.json`，导出器验证其checkpoint、
 关节、URDF、USD及控制参数绑定。本次没有重新启动Isaac采集物理参数。
 
@@ -318,7 +332,7 @@ stand目录需要 `params/env.yaml`、`params/agent.yaml`、`exported/actor.onnx
 [Data & Model压缩包](https://drive.google.com/file/d/10tQylYHdKLVDVnmVHrygLB70neHnPdoF/view)。
 压缩包SHA256为 `bbba90bdb77bbab19e74cbe9f556ea0b9330ea9d125ad8271d431aa0e37a6609`，模型逐文件哈希见
 `models/stand_onboard/provenance.json` 和 `agent/receipts/carrybox-stand/provenance.json`。模型和配置保持原字节。
-迁移机器时需同时复制这个目录；`models/`被Git忽略。
+该目录已收录在分支的 `deployment/carrybox-models.tar.gz` 中，按首节解包即可；解出的 `models/` 被Git忽略。
 
 官方stand encoder输入为 `[1,8,18,32]`、输出128维；actor输入896维（8帧×96维本体加128维深度latent），输出29动作。
 这与搬箱输入不同，两者使用独立agent和历史。stand仍由原ParkourStandAgent生成全零深度，

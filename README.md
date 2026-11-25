@@ -4,8 +4,9 @@ This is the onboard code for Project Instinct. Dsgiend for supporting the infere
 
 ***NOTE*** Current projects are only tested on Ubuntu 22.04 and ROS2 Humble with Unitree G1's Jetson Orin NX, 29Dof version.
 
-The `cel_instinct` branch adds the Wall19 depth carrybox policy. See the [carrybox deployment and sim-to-sim guide](docs/carrybox.md)
-for model transfer, simulation, dry-run, the original controller mode sequence, and current validation limits.
+The `cel_instinct` branch adds the Wall19 depth carrybox policy and includes the carrybox/stand model archive in `deployment/`.
+See the [carrybox deployment and sim-to-sim guide](docs/carrybox.md) for clone/pull, checksum verification and extraction,
+simulation, dry-run, the original controller mode sequence, and current validation limits.
 
 ## Prerequisites
 - Ubuntu
