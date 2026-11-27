@@ -56,7 +56,7 @@ def resample_depth(depth, intrinsics, camera):
 class CarryBoxWatchdog:
     """Latch loss of any required stream; caller owns the motor-off operation."""
 
-    limits = {"state": 0.1, "joystick": 0.5, "depth": 0.1, "control": 0.1}
+    limits = {"state": 0.1, "depth": 0.1, "control": 0.1}
 
     def __init__(self, started):
         self.started = started

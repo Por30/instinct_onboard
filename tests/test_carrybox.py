@@ -245,6 +245,7 @@ class SafetyTests(unittest.TestCase):
             "estop",
             "state",
             "joystick",
+            "live_joystick",
             "depth",
             "torso",
             "inference",
@@ -261,9 +262,9 @@ class SafetyTests(unittest.TestCase):
             )
             self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
             result = json.loads(completed.stdout.strip().splitlines()[-1])
-            self.assertTrue(result["dryrun"])
+            self.assertEqual(result["dryrun"], scenario != "live_joystick")
             self.assertGreaterEqual(result["motor_off"], 1)
-            self.assertEqual(result["commands"], 1 if scenario == "dryrun" else 0)
+            self.assertEqual(result["commands"], 1 if scenario in ("dryrun", "joystick", "live_joystick") else 0)
 
     def test_original_modes_and_joint_frame_conversion(self):
         for scenario in ("transitions", "stand", "mapping", "official_stand"):

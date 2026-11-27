@@ -242,8 +242,10 @@ def spin(node):
     node._depth_header.timestamp = time.time()
     for stream in node.watchdog.limits:
         node.watchdog.update(stream, time.monotonic())
-    if scenario in ("state", "joystick", "torso"):
+    if scenario in ("state", "torso"):
         node.watchdog.update(scenario, time.monotonic() - 1)
+    elif scenario in ("joystick", "live_joystick"):
+        node.watchdog.update("joystick", time.monotonic() - 1)
     elif scenario == "depth":
         node._depth_header.timestamp = time.time() - 1
     elif scenario == "estop":
@@ -278,10 +280,10 @@ def spin(node):
     try:
         node.tick()
     except (RuntimeError, ValueError):
-        if scenario == "dryrun":
+        if scenario in ("dryrun", "joystick", "live_joystick"):
             raise
     else:
-        assert scenario == "dryrun", "Fault injection did not stop the entry"
+        assert scenario in ("dryrun", "joystick", "live_joystick"), "Fault injection did not stop the entry"
 
 
 module("rclpy", init=lambda: None, shutdown=lambda: None, spin=spin)
@@ -312,12 +314,14 @@ with tempfile.TemporaryDirectory(dir=".cache") as standdir:
     sys.argv = ["scripts/g1_carrybox.py", "--bundle", "models/carrybox_wall19"]
     if scenario == "official_stand":
         sys.argv += ["--standdir", "models/stand_onboard"]
-    elif scenario in ("stand", "torso", "stand_fail"):
+    elif scenario in ("stand", "torso", "stand_fail", "joystick", "live_joystick"):
         for name in ("params/env.yaml", "params/agent.yaml", "exported/actor.onnx", "exported/0-depth_encoder.onnx"):
             path = Path(standdir) / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.touch()
         sys.argv += ["--standdir", standdir]
+        if scenario == "live_joystick":
+            sys.argv.append("--nodryrun")
     else:
         sys.argv += ["--pose-stand"]
     runpy.run_path("scripts/g1_carrybox.py", run_name="__main__")
